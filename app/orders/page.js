@@ -5,11 +5,13 @@ import useServices from "@/services/useServices";
 import { useEffect, useState } from "react";
 import ListOrders from "./ListOrders";
 import Loading from "@/components/ui/Load/Loading";
+import { useRouter } from "next/navigation";
 
 export default function OrdersPage() {
   const { getOrders } = useServices();
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchOrders() {
@@ -21,7 +23,7 @@ export default function OrdersPage() {
     fetchOrders();
   }, []);
 
-  async function navigateToShop() {
+  function navigateToShop() {
     router.push("/products");
   }
 
@@ -38,7 +40,7 @@ export default function OrdersPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center">
+          <div className="text-center h-screen">
             <p className="text-gray-500 text-2xl">You have no order history.</p>
             <button
               className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"

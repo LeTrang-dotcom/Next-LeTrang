@@ -12,32 +12,15 @@ export default function ProductCart({ product }) {
     removeProductFromCart,
     decreaseQuantityProduct,
     increaseQuantityProduct,
-    quantityProduct,
-    setQuantityProduct,
-    productsInCart,
-    setProductsInCart,
+    changeQuantityProduct,
   } = useLocalCart();
-  // const [quantityProduct, setQuantityProduct] = useState(1);
+  const [quantityProduct, setQuantityProduct] = useState(product.quantity);
+
 
   useEffect(() => {
     setQuantityProduct(product.quantity);
-  }, [product.quantity, setQuantityProduct]);
+  }, [product.quantity]);
 
-
-  useEffect(() => {
-    if (quantityProduct === 0) {
-      alert("Can't set quantity to 0");
-      setQuantityProduct(1); 
-    } else if (quantityProduct > product.stock) {
-      alert(`Can't set quantity greater than stock (${product.stock})`);
-      setQuantityProduct(product.stock); 
-    }else{
-      setProductsInCart([
-        ...productsInCart,
-        { ...product, quantity: quantityProduct },
-      ]);     
-    }
-  }, [quantityProduct, product.stock, setQuantityProduct, product, setProductsInCart, productsInCart]);
 
   function increaseQuantity() {
     increaseQuantityProduct(product);
@@ -50,9 +33,21 @@ export default function ProductCart({ product }) {
   }
 
   function handleChangeQuantity(e) {
-    const value = parseInt(e.target.value);
+    let value = parseInt(e.target.value);
     if (!isNaN(value)) {
+      
+      if (value === 0) {
+        alert("Can't set quantity to 0");
+        setQuantityProduct(1)
+        value = 1;
+      } else if (value > product.stock) {
+        alert(`Can't set quantity greater than stock (${product.stock})`);
+        setQuantityProduct(product.stock);  
+      }
+      product.quantity = quantityProduct;
       setQuantityProduct(value);
+      const updatedProduct = {...product, quantity: value};
+      changeQuantityProduct(updatedProduct);
     } else {
       setQuantityProduct("");
     }

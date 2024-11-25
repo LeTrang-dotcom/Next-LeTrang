@@ -1,3 +1,5 @@
+"use client"
+
 import { formatDate } from "@/utils/useFormat";
 import Image from "next/image";
 import classNames from "classnames";

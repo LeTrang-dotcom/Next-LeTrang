@@ -1,4 +1,3 @@
-import { counter } from "@fortawesome/fontawesome-svg-core";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -8,7 +7,7 @@ const useLocalCart = create(
       productsInCart: [],
       quantityProduct: 1,
       setQuantityProduct: (quantity) =>
-        set(() => ({ quantityProduct: quantity })),     
+        set(() => ({ quantityProduct: quantity })),
       addProductToCart: (product) =>
         set((state) => {
           const existingProduct = state.productsInCart.find(
@@ -19,9 +18,7 @@ const useLocalCart = create(
             if (existingProduct.stock > existingProduct.quantity) {
               return {
                 productsInCart: state.productsInCart.map((p) =>
-                  p.id === product.id
-                    ? { ...p, quantity: p.quantity + 1 } 
-                    : p
+                  p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
                 ),
               };
             } else {
@@ -52,9 +49,7 @@ const useLocalCart = create(
             if (existingProduct.quantity > 1) {
               return {
                 productsInCart: state.productsInCart.map((p) =>
-                  p.id === product.id
-                    ? { ...p, quantity: p.quantity - 1 }
-                    : p
+                  p.id === product.id ? { ...p, quantity: p.quantity - 1 } : p
                 ),
               };
             } else {
@@ -73,9 +68,26 @@ const useLocalCart = create(
             if (existingProduct.quantity < existingProduct.stock) {
               return {
                 productsInCart: state.productsInCart.map((p) =>
-                  p.id === product.id
-                    ? { ...p, quantity: p.quantity + 1 }
-                    : p
+                  p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+                ),
+              };
+            } else {
+              return state;
+            }
+          } else {
+            return state;
+          }
+        }),
+      changeQuantityProduct: (product) =>
+        set((state) => {
+          const existingProduct = state.productsInCart.find(
+            (p) => p.id === product.id
+          );
+          if (existingProduct) {
+            if (existingProduct.stock > existingProduct.quantity) {
+              return {
+                productsInCart: state.productsInCart.map((p) =>
+                  p.id === product.id ? product : p
                 ),
               };
             } else {

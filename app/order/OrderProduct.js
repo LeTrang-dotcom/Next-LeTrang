@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { formatCurrency } from "@/utils/useFormat";
-import { useEffect, useState } from "react";
 
 
 export default function OrderProduct({product}) {

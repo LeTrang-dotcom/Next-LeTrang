@@ -39,10 +39,20 @@ export default function Navlinks() {
 
   useEffect(() => {
     async function fetchUserInfo() {
-      const res = await getUserInfo();
-      setUserInfo(res);
+      try {
+        const res = await getUserInfo();
+        setUserInfo(res);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
     }
-    fetchUserInfo();
+    const token = document.cookie
+      .split("; ")
+      .find((cookie) => cookie.startsWith("token="))
+      ?.split("=")[1];
+    if (token) {
+      fetchUserInfo();
+    }
 
   }, []);
  

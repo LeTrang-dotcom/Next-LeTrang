@@ -3,38 +3,9 @@ import useCartStore from "@/app/stores/useCartStore";
 import useLocalCart from "@/app/stores/useLocalCart";
 import { useRouter } from "next/navigation";
 
-// const productsInCart = [
-//   {
-//     id: 1,
-//     name: "Product 1",
-//     preview_img_path:
-//       "https://images.unsplash.com/photo-1678489811694-4d251732c90f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-//     price: 10,
-//     count: 1,
-//     stock: 10,
-//   },
-//   {
-//     id: 2,
-//     name: "Product 2",
-//     preview_img_path:
-//       "https://images.unsplash.com/photo-1678489811694-4d251732c90f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-//     price: 20,
-//     count: 1,
-//     stock: 10,
-//   },
-//   {
-//     id: 3,
-//     name: "Product 3",
-//     preview_img_path:
-//       "https://images.unsplash.com/photo-1678489811694-4d251732c90f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-//     price: 30,
-//     count: 1,
-//     stock: 10,
-//   },
-// ];
 
 export default function CartShop() {
-  const { isShowCart, setIsShowCart } = useCartStore();
+  const {  setIsShowCart } = useCartStore();
   const { productsInCart } = useLocalCart();
   const router = useRouter();
 
@@ -66,7 +37,8 @@ export default function CartShop() {
         </button>
         <button
           type="button"
-          className="p-2 bg-[#001E2B] text-white rounded-lg font-[500]"
+          className={`p-2 bg-[#001E2B] text-white rounded-lg font-[500] ${productsInCart.length === 0 ? "cursor-not-allowed brightness-50 " : ""}`}
+          disabled={productsInCart.length === 0} 
           onClick={proceedToCheckout}
         >
           Proceed To Checkout

@@ -32,8 +32,8 @@ export default function CardProduct({ product }) {
           height={0}
           loading="lazy"
           sizes="100vw"
-          blurDataURL="/images/fallback-image.jfif"
-          placeholder="blur"
+          // blurDataURL="/images/fallback-image.jfif"
+          // placeholder="blur"
           onLoadingComplete={(e) => {
             setImageSrc(product.preview_img_path);
           }}
