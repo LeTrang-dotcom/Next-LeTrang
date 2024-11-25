@@ -4,6 +4,7 @@ import useServices from "@/services/useServices";
 import LoginClient from "./login-client-component";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/app/stores/useAuthStore";
+import { toast } from "react-toastify";
 
 
 export default function LoginPage() {
@@ -13,7 +14,10 @@ export default function LoginPage() {
   async function handleLogin(body) {
     try {
       const res = await loginAccount(body);
-      alert("Login success!");
+      toast.success("Success Notification !", {
+        position: "top-right",
+      });
+      // alert("Login success!");
       document.cookie = `token=${res.data.token}; path=/; max-age=3600`; 
       setUserInfo(res.data.user);
       router.push("/");
